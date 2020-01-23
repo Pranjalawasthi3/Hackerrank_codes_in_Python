@@ -1,0 +1,45 @@
+import sys
+class Node:
+    def __init__(self,data):
+        self.data = data
+        self.left = None
+        self.right = None
+        self.depth = 1
+def swap(t,val):
+    if (not t is None) and t.depth%val==0:
+        temp = t.left
+        t.left = t.right
+        t.right = temp
+    if not t is None:
+        swap(t.left,val)
+        swap(t.right,val)   
+def p(r):
+    if r is None:
+        return
+    p(r.left)
+    print(r.data,end=' ')
+    p(r.right) 
+sys.setrecursionlimit(15000)  
+N = int(input())
+root = Node(1)
+li = [root]
+while N>0:
+    N -= 1
+    a,b = map(int,input().split())
+    if a!=-1:
+        a = Node(a)
+        a.depth = li[0].depth + 1
+        li[0].left = a
+        li.append(a)
+    if b!=-1:
+        b = Node(b)
+        b.depth = li[0].depth + 1
+        li[0].right = b
+        li.append(b)
+    li[0:1] =  []
+turn = int(input())
+while turn>0:
+    turn -= 1
+    swap(root,int(input()))
+    p(root)
+    print()
